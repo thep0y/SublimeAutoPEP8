@@ -81,4 +81,4 @@ The extenstion supports both `--global-config` and `--ignore-local-config` optio
 + **Selected text** - right click on the selected text
 + **On Save** - provide by settings: option `format_on_save`
 + **Command Palette** - bring up the Command Palette and select `PEP8: Format Code` or `PEP8: Preview Changes`
-+ **Hotkeys** - `Command/Control + Shift + l` to format code, `Command/Control + 8` to preview changes
++ **Hotkeys** - `Command/Control + Alt + l` to format code, `Command/Ccontrol + Alt + 1` to preview changes
