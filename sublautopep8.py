@@ -12,10 +12,9 @@ import sublime_plugin
 from AutoPEP8.sublimeautopep8lib import autopep8
 from AutoPEP8.sublimeautopep8lib import common
 
-VERSION = '2.1.0'
+VERSION = '2.2.2'
 
 logger = logging.getLogger('SublimeAutoPEP8')
-
 
 AUTOPEP8_OPTIONS = (
     'global-config',
@@ -66,20 +65,18 @@ def _print_debug_info():
     """Print debug info into the sublime console."""
     user_settings = get_user_settings()
 
-    message = (
-        '\n'
-        'AutoPEP8:'
-        '\n\tsublime:'
-        '\n\t    version=%(subl_version)s'
-        '\n\t    platform=%(subl_platform)s'
-        '\n\t    arch=%(subl_arch)s'
-        '\n\t    packages_path=%(subl_packages)s'
-        '\n\t    installed_packages_path=%(subl_installed_packages)s'
-        '\n\tplugin:'
-        '\n\t    version=%(plugin_version)s'
-        '\n\t    config: %(config)s'
-        '\n'
-    )
+    message = ('\n'
+               'AutoPEP8:'
+               '\n\tsublime:'
+               '\n\t    version=%(subl_version)s'
+               '\n\t    platform=%(subl_platform)s'
+               '\n\t    arch=%(subl_arch)s'
+               '\n\t    packages_path=%(subl_packages)s'
+               '\n\t    installed_packages_path=%(subl_installed_packages)s'
+               '\n\tplugin:'
+               '\n\t    version=%(plugin_version)s'
+               '\n\t    config: %(config)s'
+               '\n')
 
     plugin_keys = (
         'format_on_save',
@@ -155,7 +152,6 @@ def pep8_params():
 
 
 class AutoPep8Command(sublime_plugin.TextCommand):
-
     def get_selection(self, skip_selected):
         region = self.view.sel()[0]
         # select all view if there is no selected region.
@@ -186,7 +182,6 @@ class AutoPep8Command(sublime_plugin.TextCommand):
 
 
 class AutoPep8OutputCommand(sublime_plugin.TextCommand):
-
     def run(self, edit, text):
         self.view.insert(edit, 0, text)
         self.view.end_edit(edit)
@@ -196,7 +191,6 @@ class AutoPep8OutputCommand(sublime_plugin.TextCommand):
 
 
 class AutoPep8ReplaceCommand(sublime_plugin.TextCommand):
-
     def run(self, edit, text, a, b):
         user_settings = get_user_settings()
         region = sublime.Region(int(a), int(b))
@@ -213,7 +207,6 @@ class AutoPep8ReplaceCommand(sublime_plugin.TextCommand):
 
 
 class AutoPep8FileCommand(sublime_plugin.WindowCommand):
-
     def run(self, paths=None, preview=True):
         if not paths:
             return
@@ -234,7 +227,8 @@ class AutoPep8FileCommand(sublime_plugin.WindowCommand):
             common.WORKER_START_TIMEOUT)
 
     def files(self, paths, exclude=None):
-        for path in autopep8.find_files(paths, recursive=True, exclude=exclude):
+        for path in autopep8.find_files(paths, recursive=True,
+                                        exclude=exclude):
             if path.endswith('.py'):
                 yield path
 
@@ -269,7 +263,6 @@ class AutoPep8FileCommand(sublime_plugin.WindowCommand):
 
 
 class AutoPep8Listener(sublime_plugin.EventListener):
-
     def on_pre_save_async(self, view):
         user_settings = get_user_settings()
         skip_format = view.settings().get(common.VIEW_SKIP_FORMAT, False)
@@ -281,8 +274,10 @@ class AutoPep8Listener(sublime_plugin.EventListener):
         syntax_list = user_settings.get('syntax_list', ['Python'])
         if os.path.splitext(os.path.basename(view_syntax))[0] in syntax_list:
             view.settings().set(common.VIEW_AUTOSAVE, True)
-            view.run_command('auto_pep8',
-                             {'preview': False, 'skip_selected': True})
+            view.run_command('auto_pep8', {
+                'preview': False,
+                'skip_selected': True
+            })
 
 
 def on_ready():

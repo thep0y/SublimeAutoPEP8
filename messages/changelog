@@ -1,3 +1,5 @@
+AutoPEP8_2020 2.2.2 (2020/11/15):
+    * Change the formatted binding to "ctrl + alt + L"
 AutoPEP8_2020 2.2.1 (2020/11/15):
     * Update pycodestyle 2.4.0 -> 2.6.0
     * Upgraded autopep8 1.4.0 -> 1.5.4

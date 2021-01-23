@@ -1,0 +1,2 @@
+AutoPEP8_2020 2.2.2 (2020/11/15):
+    * Change the formatted binding to "ctrl + alt + L"
